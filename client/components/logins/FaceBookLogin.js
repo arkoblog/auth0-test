@@ -1,33 +1,30 @@
 import React from 'react';
-import { FacebookLogin } from 'react-facebook-login-component';
- 
-class Login extends React.Component{
- 
-  constructor (props, context) {
-    super(props, context);
-  }
- 
-  responseFacebook (response) {
-    console.log(response);
-    //anything else you want to do(save to localStorage)... 
-  }
- 
-  render () {
-    return (
-      <div>
-        <FacebookLogin socialId="1921128611475300"
-                       language="en_US"
-                       scope="public_profile,email"
-                       responseHandler={this.responseFacebook}
-                       xfbml={true}
-                       fields="id,email,name, picture.width(200)"
-                       version="v2.5"
-                       className="facebook-login  btn btn-danger btn-lg"
-                       buttonText="Login With Facebook"/>
-      </div>
-    );
-  }
- 
+import FacebookLogin from 'react-facebook-login';
+
+class Login extends React.Component {
+
+    constructor(props, context) {
+        super(props, context);
+    }
+
+    responseFacebook(response) {
+        console.log("My Login", response);
+        //anything else you want to do(save to localStorage)... 
+    }
+
+    render() {
+        return (
+            <div>
+              <FacebookLogin
+                appId="1921128611475300"
+                autoLoad={true}
+                fields="name,email,picture"
+                callback={this.responseFacebook} 
+              />
+            </div>
+        );
+    }
+
 }
- 
+
 export default Login;

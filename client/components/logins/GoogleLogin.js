@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoogleLogin } from 'react-google-login-component';
+import  GoogleLogin  from 'react-google-login';
 
  
 class Login extends React.Component{
@@ -9,17 +9,19 @@ class Login extends React.Component{
   }
  
   responseGoogle (googleUser) {
-    var id_token = googleUser.getAuthResponse().id_token;
+    console.log("Ive logged in using google", googleUser)
   }
  
   render () {
     return (
       <div>
-        <GoogleLogin socialId="1006818650712-6s129845iii803eeq5758g79eu53e9m0.apps.googleusercontent.com"
-                     class="google-login btn btn-danger btn-lg"
-                     scope="profile"
-                     responseHandler={this.responseGoogle}
-                     buttonText="Login With Google"/>
+
+        <GoogleLogin
+          clientId="1006818650712-6s129845iii803eeq5758g79eu53e9m0.apps.googleusercontent.com"
+          buttonText="Login using google"
+          onSuccess={this.responseGoogle.bind(this)}
+          onFailure={this.responseGoogle.bind(this)}
+        />
       </div>
     );
   }

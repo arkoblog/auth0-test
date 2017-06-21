@@ -442,13 +442,48 @@ export const SET_CURRENT_USER = 'SET_CURRENT_USER'
 # 6. Incorporate Facebook Login
 
 ### 6.1 Install facebook login button and google login component
-`npm install --save react-facebook-login-component react-google-login-component`
+`npm install --save react-facebook-login react-google-login`
+
 
 
 ### 6.2 Create FacebookLogin component @ `/client/components/FacebookLogin.js`
 ```javascript
 import React from 'react';
-import { FacebookLogin } from 'react-facebook-login-component';
+import FacebookLogin from 'react-facebook-login';
+
+class Login extends React.Component {
+
+    constructor(props, context) {
+        super(props, context);
+    }
+
+    responseFacebook(response) {
+        console.log("My Login", response);
+        //anything else you want to do(save to localStorage)... 
+    }
+
+    render() {
+        return (
+            <div>
+              <FacebookLogin
+                appId="1921128611475300"
+                autoLoad={true}
+                fields="name,email,picture"
+                callback={this.responseFacebook} 
+              />
+            </div>
+        );
+    }
+
+}
+
+export default Login;
+```
+### 6.3. Create Google login Component  @ `/client/components/FacebookLogin.js`
+```javascript
+import React from 'react';
+import  GoogleLogin  from 'react-google-login';
+
  
 class Login extends React.Component{
  
@@ -456,23 +491,20 @@ class Login extends React.Component{
     super(props, context);
   }
  
-  responseFacebook (response) {
-    console.log(response);
-    //anything else you want to do(save to localStorage)... 
+  responseGoogle (googleUser) {
+    console.log("Ive logged in using google", googleUser)
   }
  
   render () {
     return (
       <div>
-        <FacebookLogin socialId="1921128611475300"
-                       language="en_US"
-                       scope="public_profile,email"
-                       responseHandler={this.responseFacebook}
-                       xfbml={true}
-                       fields="id,email,name"
-                       version="v2.5"
-                       className="facebook-login"
-                       buttonText="Login With Facebook"/>
+
+        <GoogleLogin
+          clientId="1006818650712-6s129845iii803eeq5758g79eu53e9m0.apps.googleusercontent.com"
+          buttonText="Login using google"
+          onSuccess={this.responseGoogle.bind(this)}
+          onFailure={this.responseGoogle.bind(this)}
+        />
       </div>
     );
   }
@@ -481,8 +513,6 @@ class Login extends React.Component{
  
 export default Login;
 ```
-### 6.3. Create Google login Component  @ `/client/components/FacebookLogin.js`
-
 
 ### 6.3 Update `/clients/components/HomePage.js` to include FacebookLogin component and GoogleLogin component
 ```javascript
